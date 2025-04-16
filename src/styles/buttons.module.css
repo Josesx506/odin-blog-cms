@@ -1,0 +1,24 @@
+
+.contained {
+    padding: 0.3em 0.75em;
+    border-radius: 0.3em;
+    font-weight: 550;
+    border: none;
+    font-family: "Poppins";
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    letter-spacing: 0.05em;
+    &:hover {
+        cursor: pointer;
+    }
+    &:disabled {
+        opacity: 0.5;
+    }
+}
+
+.big {
+    border: 1px solid gray;
+    font-size: medium;
+    border-radius: 0.8em;
+    padding: 0.4em 0.8em;
+    cursor: pointer;
+}

@@ -1,0 +1,85 @@
+.viewPost, .createPost {
+    display: grid;
+    gap: 3em;
+    width: 93%;
+    margin: 0 auto;
+}
+
+.postView {
+    display: grid;
+    gap: 0.5em;
+}
+
+.Title {
+    letter-spacing: 0.075em;
+    line-height: 1.5em;
+}
+
+.postDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.authorCntr {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    padding: 0.2em 0;
+}
+
+.Subtitle {
+    text-transform: capitalize;
+    font-style: oblique;
+    letter-spacing: 0.02em;
+    color: rgb(58, 58, 58);
+}
+
+.postForm {
+    display: grid;
+    gap: 1em;
+}
+
+.postTextContainers {
+    & input, & textarea {
+        width: 100%;
+        padding: 0.4em 0.8em;
+        border-radius: 0.5em;
+        border: 1px solid black;
+    }
+    & input {
+        font-weight: bold;
+        font-size: medium;
+    }
+    & textarea {
+        resize: none;
+    }
+}
+
+.postPublish {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-start;
+}
+
+.actionBtns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+}
+
+.commentCntr {
+    display: grid;
+    gap: 0.8em;
+}
+
+
+.newCmtInput {
+    display: block;
+    & textarea {
+        width: 100%;
+        resize: none;
+        border-radius: 0.3em;
+        padding: 0.2em 0.3em;
+    }
+}
