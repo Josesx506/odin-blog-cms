@@ -3,8 +3,9 @@
 import { BigButton } from '@/components/Buttons';
 import styles from "@/styles/unauthorized.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from 'react';
 
-export default function Unauthorized() {
+function UnauthorizedFunction() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const message = searchParams.get('message') || 'You are not authorized to access this resource';
@@ -23,5 +24,14 @@ export default function Unauthorized() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+export default function Unauthorized() {
+  return (
+    <Suspense>
+      <UnauthorizedFunction />
+    </Suspense>
   )
 }
