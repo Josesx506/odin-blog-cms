@@ -36,8 +36,14 @@
 
 .authSubmit {
     display: flex;
-    justify-content: center;
-    padding-top: 1em;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
+    & button {
+        width: 100%;
+    }
 }
 
 .errorMessage {

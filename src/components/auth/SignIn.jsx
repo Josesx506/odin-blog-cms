@@ -36,6 +36,28 @@ export default function SignIn() {
     }
   }
 
+  async function guestSignIn(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const user = {
+      email: "jodinblog@odinblog.com",
+      password: process.env.NEXT_PUBLIC_GUEST_PSWD,
+    };
+
+    try {
+      setLoading(true);
+      await login(user)
+      toast.success('Guest Admin Login! Redirecting...')
+      router.push('/dashboard');
+    } catch (err) {
+      toast.error('Login failed. Please try again.')
+      reset()
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div>
       <div className={styles.authContainer}>
@@ -52,6 +74,7 @@ export default function SignIn() {
             
             <div className={styles.authSubmit}>
               <ContainedButton disabled={loading}>Sign In</ContainedButton>
+              <ContainedButton onClick={guestSignIn} disabled={loading}>Guest Admin Access</ContainedButton>
             </div>
 
             <em>Dashboard view access</em>
