@@ -7,6 +7,7 @@ import styles from '@/styles/post.module.css';
 import { createCommentHandler } from '@/utils/commentHandlers';
 import { deletePostDetails } from '@/utils/postHandlers';
 import { dateFormatter, decodeJWT } from '@/utils/utils';
+import DOMPurify from 'dompurify';
 import Form from 'next/form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -113,7 +114,7 @@ export default function PostDetailProvider({ id }) {
           </div>
           <div>{dateFormatter(post.updatedAt, 'monthNameDay')}</div>
         </div>
-        <div className={styles.postDetailsBody} dangerouslySetInnerHTML={{ __html: post.body }}></div>
+        <div className={styles.postDetailsBody} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }}></div>
         <div className={styles.actionBtns}>
           {editPermission && 
             <button type='submit'>
