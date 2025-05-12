@@ -70,7 +70,6 @@ export default function EditPost({ id }) {
 
   async function updateBlogPost(e) {
     e.preventDefault();
-    console.log(editorRef.current.getContent())
     const bodyContent = editorRef.current ? editorRef.current.getContent() : '';
     const bodyRefMock = { current: { value: bodyContent } };
 
