@@ -1,6 +1,7 @@
 .blogThumbnail {
     display: grid;
     gap: 0.25em;
+    max-height: 300px;
 }
 
 /* Horizontal line between posts */
@@ -42,6 +43,10 @@
     line-height: 1.2em;
     word-wrap: break-word;
     text-overflow: ellipsis;
+    & img {
+        max-width: 100%;
+        object-fit: contain;
+    }
 }
 
 .thumbnailFooter {

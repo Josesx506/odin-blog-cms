@@ -4,6 +4,7 @@ import { DeleteContentBtn, EditContentBtn, ViewCommentsBtn } from '../Buttons';
 import { dateFormatter } from '@/utils/utils';
 import { redirect } from 'next/navigation';
 import { deletePostThumbnailHandler } from '@/utils/postHandlers';
+import DOMPurify from 'dompurify';
 
 export default function PostThumbnail({
   id, user, author, authorId,  body, updatedAt, comments, published, title, 
@@ -20,6 +21,7 @@ export default function PostThumbnail({
     e.preventDefault();
     await deletePostThumbnailHandler({ postId: id, onPostDelete, })
   }
+  const purifyOptions = {ALLOWED_TAGS:['p']}
 
   return (
     <div>
@@ -29,7 +31,9 @@ export default function PostThumbnail({
       <Link className={styles.thumbnailTitle} href={`/dashboard/${id}`}>
         <h3>{title}</h3>
       </Link>
-      <div className={styles.thumbnailBody}>{body}</div>
+      <div className={styles.thumbnailBody} dangerouslySetInnerHTML={
+        { __html: DOMPurify.sanitize(body,purifyOptions) }}></div>
+      {/* {body} */}
       
       <div className={styles.thumbnailFooter}>
         <div className={styles.footerInfo}>

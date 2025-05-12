@@ -1,5 +1,6 @@
 'use client';
 
+import TinyMCE from '@/components/posts/TinyMCE';
 import styles from '@/styles/post.module.css';
 import { createPostHandler, editPostHandler } from '@/utils/postHandlers';
 import Form from 'next/form';
@@ -9,15 +10,16 @@ import { ContainedButton } from '../Buttons';
 
 export default function CreatePost() {
   const blogTitleRef = useRef("");
-  const blogBodyRef = useRef("");
+  const editorRef = useRef(null);
   const blogPublishRef = useRef(false);
   const [postId, setPostId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [editorContent, setEditorContent] = useState('');
 
   function clearForm(e) {
     e.preventDefault();
     blogTitleRef.current.value = '';
-    blogBodyRef.current.value = '';
+    editorRef.current.setContent('');
   }
 
   async function saveBlogPost(e) {
@@ -25,18 +27,21 @@ export default function CreatePost() {
     setIsSaving(true);
 
     try {
+      const bodyContent = editorRef.current ? editorRef.current.getContent() : '';
+      const bodyRefMock = { current: { value: bodyContent } };
+
       if (!postId) {
         // Create new post
         await createPostHandler({
           titleRef: blogTitleRef,
-          bodyRef: blogBodyRef,
+          bodyRef: bodyRefMock,
           publishedRef: blogPublishRef,
           recordPostId: setPostId
         })
       } else {
         await editPostHandler({
           titleRef: blogTitleRef,
-          bodyRef: blogBodyRef,
+          bodyRef: bodyRefMock,
           publishedRef: blogPublishRef,
           postId
         })
@@ -48,6 +53,10 @@ export default function CreatePost() {
     }
   }
 
+  function handleEditorChange(content) {
+    setEditorContent(content);
+  };
+
   return (
     <div className={styles.createPost}>
       <Form className={styles.postForm} onSubmit={saveBlogPost}>
@@ -56,11 +65,12 @@ export default function CreatePost() {
           <input ref={blogTitleRef} id='title'
             placeholder='Enter your title...' name='title'></input>
         </div>
+
         <div className={styles.postTextContainers}>
-          <label htmlFor='body'></label>
-          <textarea ref={blogBodyRef} id='body' placeholder='Document your thoughts...'
-            rows={20} name='body'></textarea>
+          <TinyMCE editorContent={editorContent} editorRef={editorRef}
+            handleEditorChange={handleEditorChange} />
         </div>
+
         <div className={styles.postPublish} >
           <label htmlFor='published'>Publish this draft?</label>
           <input ref={blogPublishRef} id='published' type='checkbox' name='published'></input>

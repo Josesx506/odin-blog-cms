@@ -113,9 +113,7 @@ export default function PostDetailProvider({ id }) {
           </div>
           <div>{dateFormatter(post.updatedAt, 'monthNameDay')}</div>
         </div>
-        <div>
-          {post.body}
-        </div>
+        <div className={styles.postDetailsBody} dangerouslySetInnerHTML={{ __html: post.body }}></div>
         <div className={styles.actionBtns}>
           {editPermission && 
             <button type='submit'>

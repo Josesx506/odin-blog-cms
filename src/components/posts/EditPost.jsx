@@ -9,6 +9,7 @@ import Form from 'next/form';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { ContainedButton } from '../Buttons';
+import TinyMCE from '@/components/posts/TinyMCE';
 
 
 export default function EditPost({ id }) {
@@ -19,7 +20,8 @@ export default function EditPost({ id }) {
   const userId = decodeJWT(accessToken).id;
   const router = useRouter();
   const blogTitleRef = useRef("");
-  const blogBodyRef = useRef("");
+  const editorRef = useRef(null);
+  const [editorContent, setEditorContent] = useState('');
   const blogPublishRef = useRef(false);
 
 
@@ -33,7 +35,7 @@ export default function EditPost({ id }) {
         if (userId !== res.data.authorId) {
           router.push(`/unauthorized?message=${encodeURIComponent("You don't have permission to edit this post")}`)
         }
-        setPost(res.data)
+        setPost({...res.data});
       
       } catch (err) {
         if (err.response?.status === 403) {
@@ -59,14 +61,22 @@ export default function EditPost({ id }) {
   function clearForm(e) {
     e.preventDefault();
     blogTitleRef.current.value = '';
-    blogBodyRef.current.value = '';
+    editorRef.current.setContent('');
   }
+
+  function handleEditorChange(content) {
+    setEditorContent(content);
+  };
 
   async function updateBlogPost(e) {
     e.preventDefault();
+    console.log(editorRef.current.getContent())
+    const bodyContent = editorRef.current ? editorRef.current.getContent() : '';
+    const bodyRefMock = { current: { value: bodyContent } };
+
     await editPostHandler({
       titleRef: blogTitleRef,
-      bodyRef: blogBodyRef,
+      bodyRef: bodyRefMock,
       publishedRef: blogPublishRef,
       postId: id
     })
@@ -82,9 +92,8 @@ export default function EditPost({ id }) {
             placeholder='Enter your title...' name='title'></input>
         </div>
         <div className={styles.postTextContainers}>
-          <label htmlFor='body'></label>
-          <textarea ref={blogBodyRef} id='body' placeholder='Document your thoughts...'
-            defaultValue={post.body} rows={20} name='body'></textarea>
+          <TinyMCE editorContent={editorContent} editorRef={editorRef}
+            handleEditorChange={handleEditorChange} initialValue={post.body} />
         </div>
         <div className={styles.postPublish} >
           <label htmlFor='published'>Publish this draft?</label>

@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }) {
   }, [accessToken, loading]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or any loading indicator
+    return <div>Loading Protected...</div>; // Or any loading indicator
   }
 
   if (!accessToken) {

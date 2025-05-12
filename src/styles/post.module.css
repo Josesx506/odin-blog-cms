@@ -28,6 +28,17 @@
     padding: 0.2em 0;
 }
 
+.postDetailsBody{
+    line-height: 2;
+    & img {
+        margin-top: 0.5em;
+        max-height: 500px;
+    }
+    & p {
+        margin-bottom: 0.5em;
+    }
+}
+
 .Subtitle {
     text-transform: capitalize;
     font-style: oblique;

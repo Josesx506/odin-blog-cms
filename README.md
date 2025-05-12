@@ -1,6 +1,14 @@
 This is a Next.js project for the blog api admin panel. Blog post authors and site admins can to login here. 
 Other users should log in at the basic page. Authors can only see posts that they write, admins can see posts from 
-everyone. There's no pagination for now. If there's interest, I can easily integrate it,
+everyone. There's no pagination for now. If there's interest, I can easily integrate it. <br><br>
+
+Updated support to work with the `TinyMCE` rich-text-editor for creating and editing posts. `Supabase` storage is used 
+to persist uploaded images, and TinyMCE supports image external links by default. HTML posts are directly injected as 
+innerHTML in react which is typically unsafe, however, `DOMPurify` is used to sanitize the html, allowing only specific 
+html tags and attributes to be saved in the db. <br>
+
+The text and images can be styled as desired within the rich-text-editor, and allowing for simple html styles like code, 
+superscript, subscript, centered text etc.
 
 ## Getting Started
 First install packages with `npm install`, run the development server:
@@ -13,7 +21,7 @@ pnpm dev
 # or
 bun dev
 ```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:1900) with your browser to see the result.
 
 
 ### Content Management System (CMS) Routes 
@@ -50,4 +58,9 @@ the backend logic resides
 ```bash
 NEXT_PUBLIC_EXPRESSURL="..."
 NEXT_PUBLIC_CMSURL="..."
+NEXT_PUBLIC_GUEST_PSWD="..."
+NEXT_PUBLIC_TINYMCE_API="..."
+NEXT_PUBLIC_SUPABASE_BUCKET="..."
+NEXT_PUBLIC_SUPABASE_URL="..."
+NEXT_PUBLIC_SUPABASE_ANON="..."
 ```
